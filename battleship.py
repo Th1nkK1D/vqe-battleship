@@ -21,6 +21,33 @@ class Battleship:
     
     return [w, Pauli(zp, xp)]
 
+  def draw(self, solution=[]):
+    if len(solution) == 0:
+      solution = np.zeros(self.nqubit)
+    else:
+      solution = np.flip(np.array(list(solution), dtype=int))
+
+    print("Simple Battleship")
+    print("size:", self.dim[0], "x", self.dim[1], "\n")
+
+    for i in range(self.dim[0]):
+      line = "| "
+
+      for j in range(self.dim[1]):
+        line += "x" if solution[self._gridIndexToQubitNumber(i, j)] == 1 else " "
+        line += " | "
+
+      line += str(self.r[i])
+      print(line)
+
+    line = "  "
+
+    for j in range(self.dim[1]):
+      line += str(self.c[j])
+      line += "   "
+
+    print(line)
+
   def getQubitOps(self):
     pauliList = []
     shift = np.sum(self.c**2) + np.sum(self.r**2)

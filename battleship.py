@@ -3,7 +3,7 @@ from qiskit.quantum_info import Pauli
 from qiskit.aqua import Operator
 
 class Battleship:
-  def __init__(self, r, c):
+  def __init__(self, r = [], c = []):
     self.r = np.array(r)
     self.c = np.array(c)
     self.dim = np.array([len(r), len(c)])
@@ -20,6 +20,10 @@ class Battleship:
       zp[self._gridIndexToQubitNumber(i, j)] = True
     
     return [w, Pauli(zp, xp)]
+
+  def randomPuzzle(self, h, w):
+    grid = np.random.randint(0, 2, (h, w))
+    self.__init__(np.add.reduce(grid.transpose()), np.add.reduce(grid))
 
   def draw(self, solution=[]):
     if len(solution) == 0:
